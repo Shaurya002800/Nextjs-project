@@ -1,22 +1,48 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Protected from "../components/Protected";
+import { supabase } from "../../lib/supabase";
+import { useRouter } from "next/navigation";
 
-export default function Dashboard() {
-  const [team, setTeam] = useState(null);
+export default function DashboardPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    fetch("https://api.modelarena.com/team")
-      .then(res => res.json())
-      .then(data => setTeam(data));
-  }, []);
+    // Get session after OAuth redirect
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) {
+        router.push("/");
+      } else {
+        setUser(data.session.user);
+      }
+      setLoading(false);
+    });
+
+    // Listen for future auth changes
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!session) {
+          router.push("/");
+        } else {
+          setUser(session.user);
+          setLoading(false);
+        }
+      }
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, [router]);
+
+  if (loading) return <p>Loading...</p>;
 
   return (
-    <Protected>
+    <main style={{ padding: "40px" }}>
       <h1>Dashboard</h1>
-      <pre>{JSON.stringify(team, null, 2)}</pre>
-    </Protected>
+      <p>Logged in as: {user.email}</p>
+    </main>
   );
 }
-
