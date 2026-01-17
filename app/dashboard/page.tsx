@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
-import { Navbar } from "../components/Navbar"
+import Navbar from "../../components/Navbar";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -42,6 +42,7 @@ export default function DashboardPage() {
 
   return (
     <main style={{ padding: "40px" }}>
+      <Navbar />
       <h1>Dashboard</h1>
       <p>Logged in as: {user.email}</p>
     </main>

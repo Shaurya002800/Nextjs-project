@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Protected from "../components/Protected";
+import Protected from "../../components/Protected";
 
 export default function SubmitPage() {
   const [file, setFile] = useState<File | null>(null);

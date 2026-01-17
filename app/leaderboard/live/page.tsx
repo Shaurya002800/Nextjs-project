@@ -1,4 +1,4 @@
-import Protected from "../../components/Protected";
+import Protected from "../../../components/Protected";
 
 export default function LiveLeaderboard() {
   return (

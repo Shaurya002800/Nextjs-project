@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Protected from "../../components/Protected";
+import Protected from "../../../components/Protected";
 
 export default function LiveLeaderboard() {
   const [data, setData] = useState<any>(null);
