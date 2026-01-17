@@ -1,7 +1,6 @@
 "use client";
 
-import { supabase } from "@/lib/supabase";
-import Hero from "./components/Hero";
+import { supabase } from "../lib/supabase";
 
 export default function LandingPage() {
   const signInWithGoogle = async () => {
@@ -14,6 +13,19 @@ export default function LandingPage() {
   };
 
   return (
-    <Hero onGoogleSignIn={signInWithGoogle} />
+    <main style={{ padding: "60px" }}>
+      <h1>ModelArena</h1>
+
+      <p>
+        A competitive ML challenge platform where participants
+        submit models and climb the leaderboard.
+      </p>
+
+      <br />
+
+      <button onClick={signInWithGoogle}>
+        Sign in with Google
+      </button>
+    </main>
   );
 }
